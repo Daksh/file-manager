@@ -25,7 +25,6 @@ import stat as _stat
 import time as _time
 import gio as _gio
 import gtk as _gtk
-import gnomevfs as _gnomevfs
 import file_size as _file_size
 
 class FilePropertiesDialog(_gtk.Builder):
@@ -69,7 +68,7 @@ class FilePropertiesDialog(_gtk.Builder):
 		self.name_entry.set_text(_os.path.basename(self.path))
 		fileinfo = gfile.query_info("standard::content-type")
 		mime_type = _gio.content_type_get_mime_type(fileinfo.get_content_type())
-		description = _gnomevfs.mime_get_description(mime_type)
+		description = _gio.content_type_get_description(fileinfo.get_content_type())
 		if description:
 			self.type_info.set_text("%s (%s)" % (description, mime_type))
 		else:
